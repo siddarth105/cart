@@ -1,0 +1,24 @@
+SAMPLE JSON		->
+{
+	"orderId": "1234",
+	"itemList": [{
+			"itemId": "30",
+			"itemName": "Brush"
+		},
+		{
+			"itemId": "43",
+			"itemName": "Paste"
+		}
+	],
+	"status": "N"
+}
+
+------------------------------------------------------------------------------------------------------------------------
+Docker :-
+------------------------------------------------------------------------------------------------------------------------
+Enter the SpringBoot folder in local machine and then run
+	docker build -f Dockerfile -t chkt/cart .		
+	
+	docker run -P -d --name cart chkt/cart
+	docker run -P -d --name cart --link cassandra chkt/cart			 
+------------------------------------------------------------------------------------------------------------------------
