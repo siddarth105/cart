@@ -2,13 +2,13 @@ package com.ecomm.chkt.cart.model;
 
 import java.util.List;
 
-public class Order {
+public class OrderDTO {
 	
 	private int orderId;
-	private List<Item> itemList;
+	private List<ItemDTO> itemList;
 	private String status;
 	
-	public Order(int orderId, List<Item> itemList, String status) {
+	public OrderDTO(int orderId, List<ItemDTO> itemList, String status) {
 		super();
 		this.orderId = orderId;
 		this.itemList = itemList;
@@ -21,10 +21,10 @@ public class Order {
 	public void setOrderId(int orderId) {
 		this.orderId = orderId;
 	}
-	public List<Item> getItemList() {
+	public List<ItemDTO> getItemList() {
 		return itemList;
 	}
-	public void setItemList(List<Item> itemList) {
+	public void setItemList(List<ItemDTO> itemList) {
 		this.itemList = itemList;
 	}
 	public String getStatus() {

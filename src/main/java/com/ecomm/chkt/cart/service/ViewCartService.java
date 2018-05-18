@@ -1,9 +1,9 @@
 package com.ecomm.chkt.cart.service;
 
-import com.ecomm.chkt.cart.model.Order;
+import com.ecomm.chkt.cart.model.OrderDTO;
 
 public interface ViewCartService {
 	
-	public Order getOrder();
+	public OrderDTO getOrder();
 
 }

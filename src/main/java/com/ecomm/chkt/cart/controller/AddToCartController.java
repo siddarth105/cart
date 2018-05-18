@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ecomm.chkt.cart.model.Order;
+import com.ecomm.chkt.cart.model.OrderDTO;
 import com.ecomm.chkt.cart.service.AddCartService;
 
 @RestController
@@ -21,9 +21,9 @@ public class AddToCartController {
 	private final Log log = LogFactory.getLog(getClass());
 	
 	@RequestMapping(method=RequestMethod.POST, value = "/addToCart")
-	public String addToCart(@RequestBody Order order) {
+	public String addToCart(@RequestBody OrderDTO orderDTO) {
 		this.log.info("AddToCartController :: addToCart");
-		String result = addCartService.addToCart(order);
+		String result = addCartService.addToCart(orderDTO);
 		return result;
 	}
 

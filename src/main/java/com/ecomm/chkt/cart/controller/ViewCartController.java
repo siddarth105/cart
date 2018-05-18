@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ecomm.chkt.cart.model.Order;
+import com.ecomm.chkt.cart.model.OrderDTO;
 import com.ecomm.chkt.cart.service.ViewCartService;
 
 @RestController
@@ -20,7 +20,7 @@ public class ViewCartController {
 	private final Log log = LogFactory.getLog(getClass());
 	
 	@RequestMapping(method=RequestMethod.GET, value = "/viewCart")
-	public Order viewCart() {
+	public OrderDTO viewCart() {
 		this.log.info("ViewCartController :: viewCart");
 		return viewCartService.getOrder();
 	}

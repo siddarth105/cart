@@ -1,11 +1,11 @@
 package com.ecomm.chkt.cart.model;
 
-public class Item {
+public class ItemDTO {
 	
 	private int itemId;
 	private String itemName;
 	
-	public Item(int itemId, String itemName) {
+	public ItemDTO(int itemId, String itemName) {
 		super();
 		this.itemId = itemId;
 		this.itemName = itemName;
