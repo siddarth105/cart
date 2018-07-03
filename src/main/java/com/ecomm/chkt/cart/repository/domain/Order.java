@@ -5,7 +5,7 @@ import com.datastax.driver.mapping.annotations.Column;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
 
-@Table(name = "orders")
+@Table(keyspace = "cart_keyspace", name = "orders")
 public class Order {
 
     @PartitionKey

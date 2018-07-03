@@ -1,42 +1,60 @@
 package com.ecomm.chkt.cart.repository.dao.impl;
 
-import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.Statement;
+import com.datastax.driver.core.Row;
+import com.datastax.driver.core.Session;
 import com.datastax.driver.core.querybuilder.Insert;
 import com.datastax.driver.core.querybuilder.QueryBuilder;
+import com.datastax.driver.core.querybuilder.Select;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
-import com.ecomm.chkt.cart.repository.CassandraSession;
+import com.ecomm.chkt.cart.repository.CassandraConnector;
 import com.ecomm.chkt.cart.repository.dao.AddCartRepositoryManager;
 import com.ecomm.chkt.cart.repository.domain.Order;
+import com.ecomm.chkt.cart.repository.mapper.OrderRepoMapper;
 import com.ecomm.chkt.cart.repository.table.OrderTable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class AddCartRepositoryManagerImpl implements AddCartRepositoryManager {
 
     private final Mapper<Order> orderMapper;
-    protected CassandraSession cassandraSession;
+    private Session cassandraSession;
+
+    @Autowired
+    private OrderRepoMapper orderRepoMapper;
 
     public AddCartRepositoryManagerImpl() {
-        MappingManager mappingManager = new MappingManager(cassandraSession.getSession());
+        cassandraSession = CassandraConnector.getInstance().getSession();
+        MappingManager mappingManager = new MappingManager(cassandraSession);
         orderMapper = mappingManager.mapper(Order.class);
     }
 
     public int insertOrder(Order order) {
 
-        Insert insert = getInsertQry();
-
-        final PreparedStatement statement = cassandraSession.prepare(insert);
-        Statement saveQuery = orderMapper.saveQuery(order, com.datastax.driver.mapping.Mapper.Option.ttl(6));
-        final ResultSet rs = cassandraSession.execute(saveQuery);
-        //final BoundStatement boundStatement = new BoundStatement(statement);
+        Insert insertQry = getInsertQry();
+        final ResultSet rs = cassandraSession.execute(insertQry);
         return 1;
-
     }
 
-    //TODO :: Not used
+    public List<Order> viewAllCart() {
+
+        final Select slctQuery = getAllCartSlctQry();
+        final ResultSet rs = cassandraSession.execute(slctQuery);
+        final List<Row> listRow = rs.all();
+        Order order = null;
+        List<Order> orderList = new ArrayList<Order>();
+        for (Row orderItemRow : listRow) {
+            order = orderRepoMapper.mapOrder(orderItemRow);
+            orderList.add(order);
+        }
+        return orderList;
+    }
+
     private Insert getInsertQry() {
         final Insert insert = QueryBuilder.insertInto(OrderTable.ORDER)
                 .values(
@@ -58,13 +76,9 @@ public class AddCartRepositoryManagerImpl implements AddCartRepositoryManager {
         return insert;
     }
 
-
-    public CassandraSession getCassandraSession() {
-        return cassandraSession;
-    }
-
-    public void setCassandraSession(CassandraSession cassandraSession) {
-        this.cassandraSession = cassandraSession;
+    private Select getAllCartSlctQry() {
+        final Select selectQuery = QueryBuilder.select().all().from("cart_keyspace", OrderTable.ORDER);
+        return selectQuery;
     }
 }
 

@@ -22,3 +22,8 @@ Enter the SpringBoot folder in local machine and then run
 	docker run -P -d --name cart chkt/cart
 	docker run -P -d --name cart --link cassandra chkt/cart			 
 ------------------------------------------------------------------------------------------------------------------------
+
+
+docker run -it --link cassandra:latest --rm cassandra cqlsh cassandra
+
+docker run -it --link cassandra-2:latest --rm cassandra cqlsh cassandra
