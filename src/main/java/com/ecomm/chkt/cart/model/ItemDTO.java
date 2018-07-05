@@ -1,8 +1,9 @@
 package com.ecomm.chkt.cart.model;
 
 public class ItemDTO {
-	
+
 	private int itemId;
+
 	private String itemName;
 	
 	public ItemDTO(int itemId, String itemName) {
@@ -10,6 +11,8 @@ public class ItemDTO {
 		this.itemId = itemId;
 		this.itemName = itemName;
 	}
+
+	public ItemDTO() {}
 	
 	public int getItemId() {
 		return itemId;

@@ -3,9 +3,11 @@ package com.ecomm.chkt.cart.model;
 import java.util.List;
 
 public class OrderDTO {
-	
+
 	private int orderId;
+
 	private List<ItemDTO> itemList;
+
 	private String status;
 	
 	public OrderDTO(int orderId, List<ItemDTO> itemList, String status) {
@@ -14,6 +16,8 @@ public class OrderDTO {
 		this.itemList = itemList;
 		this.status = status;
 	}
+
+	public OrderDTO() {}
 	
 	public int getOrderId() {
 		return orderId;

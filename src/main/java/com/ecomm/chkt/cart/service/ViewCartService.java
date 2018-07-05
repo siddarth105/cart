@@ -4,6 +4,6 @@ import com.ecomm.chkt.cart.model.OrderDTO;
 
 public interface ViewCartService {
 	
-	public OrderDTO getOrder();
+	public OrderDTO getOrder(Integer orderId);
 
 }

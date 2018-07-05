@@ -7,8 +7,6 @@ import com.ecomm.chkt.cart.repository.mapper.OrderToDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -21,15 +19,9 @@ public class ViewCartServiceImpl implements ViewCartService {
 	private OrderToDtoMapper orderToDtoMapper;
 	
 	@Override
-	public OrderDTO getOrder() {
+	public OrderDTO getOrder(Integer orderId) {
 
-		List<Order> ordrLst = addCartRepository.viewAllCart();
-		Collections.sort(ordrLst, new Comparator<Order>() {
-			@Override
-			public int compare(Order o1, Order o2) {
-				return o1.getOrderId() > o2.getOrderId() ? 1 : -1;
-			}
-		});
+		List<Order> ordrLst = addCartRepository.viewAllCart(orderId);
 		return orderToDtoMapper.map(ordrLst);
 	}
 	

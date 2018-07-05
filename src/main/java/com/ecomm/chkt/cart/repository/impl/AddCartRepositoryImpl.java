@@ -19,12 +19,12 @@ public class AddCartRepositoryImpl implements AddCartRepository {
     private DtoToOrderMapper dtoToOrderMapper;
 
     public int insert(OrderDTO orderDTO) {
-        Order order = dtoToOrderMapper.map(orderDTO);
-        return addCartRepositoryManager.insertOrder(order);
+        List<Order> orderLst = dtoToOrderMapper.map(orderDTO);
+        return addCartRepositoryManager.insertOrder(orderLst);
     }
 
-    public List<Order> viewAllCart() {
-        return addCartRepositoryManager.viewAllCart();
+    public List<Order> viewAllCart(Integer orderId) {
+        return addCartRepositoryManager.viewAllCart(orderId);
     }
 
 }

@@ -27,6 +27,9 @@ public class Order {
         this.itemName = itemName;
     }
 
+    public Order() {
+    }
+
     public int getOrderId() {
         return orderId;
     }

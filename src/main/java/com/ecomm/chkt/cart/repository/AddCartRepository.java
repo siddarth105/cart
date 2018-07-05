@@ -7,5 +7,5 @@ import java.util.List;
 public interface AddCartRepository {
 
     public int insert(OrderDTO orderDTO);
-    public List<Order> viewAllCart();
+    public List<Order> viewAllCart(Integer orderId);
 }

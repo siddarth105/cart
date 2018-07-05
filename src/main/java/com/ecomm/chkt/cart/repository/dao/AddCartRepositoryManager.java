@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface AddCartRepositoryManager {
 
-    public int insertOrder(Order order);
-    public List<Order> viewAllCart();
+    public int insertOrder(List<Order> orderLst);
+    public List<Order> viewAllCart(Integer orderId);
 }

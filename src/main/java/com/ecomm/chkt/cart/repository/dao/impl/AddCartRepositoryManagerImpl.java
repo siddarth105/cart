@@ -3,6 +3,7 @@ package com.ecomm.chkt.cart.repository.dao.impl;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
+import com.datastax.driver.core.querybuilder.Clause;
 import com.datastax.driver.core.querybuilder.Insert;
 import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.datastax.driver.core.querybuilder.Select;
@@ -34,16 +35,17 @@ public class AddCartRepositoryManagerImpl implements AddCartRepositoryManager {
         orderMapper = mappingManager.mapper(Order.class);
     }
 
-    public int insertOrder(Order order) {
-
-        Insert insertQry = getInsertQry();
-        final ResultSet rs = cassandraSession.execute(insertQry);
+    public int insertOrder(List<Order> orderLst) {
+        for (Order order : orderLst) {
+            Insert insertQry = getInsertQry(order);
+            final ResultSet rs = cassandraSession.execute(insertQry);
+        }
         return 1;
     }
 
-    public List<Order> viewAllCart() {
+    public List<Order> viewAllCart(Integer orderId) {
 
-        final Select slctQuery = getAllCartSlctQry();
+        final Select slctQuery = getAllCartSlctQry(orderId);
         final ResultSet rs = cassandraSession.execute(slctQuery);
         final List<Row> listRow = rs.all();
         Order order = null;
@@ -55,8 +57,8 @@ public class AddCartRepositoryManagerImpl implements AddCartRepositoryManager {
         return orderList;
     }
 
-    private Insert getInsertQry() {
-        final Insert insert = QueryBuilder.insertInto(OrderTable.ORDER)
+    private Insert getInsertQry(Order order) {
+        final Insert insert = QueryBuilder.insertInto("cart_keyspace", OrderTable.ORDER)
                 .values(
                         new String[]{
                                 OrderTable.ORDER_ID,
@@ -65,19 +67,20 @@ public class AddCartRepositoryManagerImpl implements AddCartRepositoryManager {
                                 OrderTable.ORDER_ITEM_NAME
                         },
                         new Object[]{
-                                QueryBuilder.bindMarker(),
-                                QueryBuilder.bindMarker(),
-                                QueryBuilder.bindMarker(),
-                                QueryBuilder.bindMarker()
+                                order.getOrderId(),
+                                order.getStatus(),
+                                order.getItemId(),
+                                order.getItemName()
                         }
                 );
-
-        insert.using(com.datastax.driver.core.querybuilder.QueryBuilder.ttl(QueryBuilder.bindMarker("TTL")));
         return insert;
     }
 
-    private Select getAllCartSlctQry() {
+    private Select getAllCartSlctQry(Integer orderId) {
         final Select selectQuery = QueryBuilder.select().all().from("cart_keyspace", OrderTable.ORDER);
+        Select.Where selectWhere = selectQuery.where();
+        Clause clause = QueryBuilder.eq("o_order_id", orderId);
+        selectWhere.and(clause);
         return selectQuery;
     }
 }
