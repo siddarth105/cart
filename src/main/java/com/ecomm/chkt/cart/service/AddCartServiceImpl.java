@@ -17,7 +17,7 @@ public class AddCartServiceImpl implements AddCartService {
 	@Override
 	public String addToCart(OrderDTO orderDTO) {
 		inventoryService.checkInventory(orderDTO.getItemList());
-		addCartRepository.insert(orderDTO);
+		addCartRepository.insert(orderDTO, true);
 		return "success";
 	}
 

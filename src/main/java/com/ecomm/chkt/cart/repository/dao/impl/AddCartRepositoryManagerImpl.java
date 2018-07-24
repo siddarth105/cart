@@ -7,11 +7,10 @@ import com.datastax.driver.core.querybuilder.Clause;
 import com.datastax.driver.core.querybuilder.Insert;
 import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.datastax.driver.core.querybuilder.Select;
-import com.datastax.driver.mapping.Mapper;
-import com.datastax.driver.mapping.MappingManager;
 import com.ecomm.chkt.cart.repository.CassandraConnector;
 import com.ecomm.chkt.cart.repository.dao.AddCartRepositoryManager;
 import com.ecomm.chkt.cart.repository.domain.Order;
+import com.ecomm.chkt.cart.repository.domain.OrderInt;
 import com.ecomm.chkt.cart.repository.mapper.OrderRepoMapper;
 import com.ecomm.chkt.cart.repository.table.OrderTable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ import java.util.List;
 @Component
 public class AddCartRepositoryManagerImpl implements AddCartRepositoryManager {
 
-    private final Mapper<Order> orderMapper;
     private Session cassandraSession;
 
     @Autowired
@@ -31,25 +29,23 @@ public class AddCartRepositoryManagerImpl implements AddCartRepositoryManager {
 
     public AddCartRepositoryManagerImpl() {
         cassandraSession = CassandraConnector.getInstance().getSession();
-        MappingManager mappingManager = new MappingManager(cassandraSession);
-        orderMapper = mappingManager.mapper(Order.class);
     }
 
-    public int insertOrder(List<Order> orderLst) {
-        for (Order order : orderLst) {
+    public int insertOrder(List<OrderInt> orderLst) {
+        for (OrderInt order : orderLst) {
             Insert insertQry = getInsertQry(order);
             final ResultSet rs = cassandraSession.execute(insertQry);
         }
         return 1;
     }
 
-    public List<Order> viewAllCart(Integer orderId) {
+    public List<OrderInt> viewAllCart(Integer orderId) {
 
         final Select slctQuery = getAllCartSlctQry(orderId);
         final ResultSet rs = cassandraSession.execute(slctQuery);
         final List<Row> listRow = rs.all();
         Order order = null;
-        List<Order> orderList = new ArrayList<Order>();
+        List<OrderInt> orderList = new ArrayList<OrderInt>();
         for (Row orderItemRow : listRow) {
             order = orderRepoMapper.mapOrder(orderItemRow);
             orderList.add(order);
@@ -57,7 +53,7 @@ public class AddCartRepositoryManagerImpl implements AddCartRepositoryManager {
         return orderList;
     }
 
-    private Insert getInsertQry(Order order) {
+    private Insert getInsertQry(OrderInt order) {
         final Insert insert = QueryBuilder.insertInto("cart_keyspace", OrderTable.ORDER)
                 .values(
                         new String[]{

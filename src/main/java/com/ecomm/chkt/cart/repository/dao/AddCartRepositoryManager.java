@@ -1,11 +1,11 @@
 package com.ecomm.chkt.cart.repository.dao;
 
-import com.ecomm.chkt.cart.repository.domain.Order;
+import com.ecomm.chkt.cart.repository.domain.OrderInt;
 
 import java.util.List;
 
 public interface AddCartRepositoryManager {
 
-    public int insertOrder(List<Order> orderLst);
-    public List<Order> viewAllCart(Integer orderId);
+    int insertOrder(List<OrderInt> orderLst);
+    List<OrderInt> viewAllCart(Integer orderId);
 }

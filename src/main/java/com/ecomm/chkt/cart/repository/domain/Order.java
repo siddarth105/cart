@@ -6,7 +6,7 @@ import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
 
 @Table(keyspace = "cart_keyspace", name = "orders")
-public class Order {
+public class Order implements OrderInt {
 
     @PartitionKey
     @Column(name="o_order_id")

@@ -40,18 +40,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-cassandra -->
-		<!--<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-cassandra</artifactId>
-			<version>2.0.7.RELEASE</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.datastax.cassandra</groupId>
-					<artifactId>cassandra-driver-core</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency> -->
 		<dependency>
 			<groupId>com.datastax.cassandra</groupId>
 			<artifactId>cassandra-driver-core</artifactId>
@@ -62,6 +50,17 @@
 			<artifactId>cassandra-driver-mapping</artifactId>
 			<version>3.3.0</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-cassandra-reactive</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
