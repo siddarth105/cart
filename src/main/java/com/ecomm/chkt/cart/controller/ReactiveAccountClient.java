@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import com.ecomm.chkt.cart.consumer.ReactiveAccountConsumer1;
+
 import reactor.core.publisher.ConnectableFlux;
 import reactor.core.publisher.Flux;
 
@@ -18,6 +21,9 @@ public class ReactiveAccountClient {
 
 	@Autowired
 	private WebClient webClient;
+	
+	@Autowired
+	private ReactiveAccountConsumer1<String> reactiveAccountConsumer1;
 
 	private final Log log = LogFactory.getLog(getClass());
 
@@ -29,17 +35,17 @@ public class ReactiveAccountClient {
 		this.log.info("ReactiveAccountClient :: getReactivePaymentAccount");
 		getFluxFromRetrieve(PAYMENT_ACCOUNT_URL)
 				.map(userName -> "Cart :: " + userName)																			// Perform necessary operation on each element
-				.subscribe(System.out::println);																				// Start listening to the FLUX, can add more consumers inside subscribe
+				.subscribe(System.out::println);																					// Start listening to the FLUX, can add more consumers inside subscribe
 
 	}
 
 	@GetMapping(value = "/getConnectableAccountFlux")
 	public void getConnectableAccountFlux() {
 		this.log.info("ReactiveAccountClient :: getConnectableAccountFlux");
-		ConnectableFlux<String> connectableFlux = getFluxFromExchange(PAYMENT_ACCOUNT_URL).publish();							// publish() -> converts FLUX to CONNECTABLE_FLUX where multiple consumers can subscribe. Flux will be consumed only on connect and not on subscribe
-		connectableFlux.subscribe(d -> System.out.println("Subscriber_1 :: " + d));
-		connectableFlux.subscribe(d -> System.out.println("Subscriber_2 :: " +d));
+		ConnectableFlux<String> connectableFlux = getFluxFromExchange(PAYMENT_ACCOUNT_URL).publish();								// publish() -> converts FLUX to CONNECTABLE_FLUX where multiple consumers can subscribe. Flux will be consumed only on connect and not on subscribe
 		connectableFlux.connect();
+		connectableFlux.subscribe(reactiveAccountConsumer1);
+		connectableFlux.subscribe(d -> System.out.println("Subscriber_2 :: " + d));
 	}
 
 	Flux<String> getFluxFromExchange(String url) {
