@@ -1,0 +1,27 @@
+version: '3'
+services:
+  cart:
+    container_name: cart
+    build: .
+    depends_on:
+      - cassandra-container2
+    ports:
+      - 8080:8080
+    networks:
+      - cart_default
+  cassandra-container2:
+    container_name: cassandra-container2
+    image: cassandra:latest
+    volumes:
+      - '/My Computer/Java/DB/CASSANDRA:/var/lib/cassandra'
+    ports:
+      - 9042:9042
+      - 9160:9160
+      - 7000:7000
+      - 7001:7001
+      - 7199:7199
+    networks:
+      - cart_default
+networks:
+    cart_default:
+        driver: bridge
