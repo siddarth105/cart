@@ -17,10 +17,15 @@ SAMPLE JSON		->
 Docker :-
 ------------------------------------------------------------------------------------------------------------------------
 Enter the SpringBoot folder in local machine and then run
-	docker build -f Dockerfile -t chkt/cart .		
+	docker build -f Dockerfile -t chkt/cart .
+
+	docker run -it --name cart --link cassandra-2 chkt/cart
 	
 	docker run -P -d --name cart chkt/cart
-	docker run -P -d --name cart --link cassandra chkt/cart			 
+	docker run -P -d --name cart --link cassandra chkt/cart
+
+	To Log-In to the box
+	docker exec -it 65a8743c5fc1 bash
 ------------------------------------------------------------------------------------------------------------------------
 
 
