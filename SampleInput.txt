@@ -25,9 +25,11 @@ Enter the SpringBoot folder in local machine and then run
 	docker run -P -d --name cart --link cassandra chkt/cart
 
 	To Log-In to the box
-	docker exec -it 65a8743c5fc1 bash
+	docker exec -it 65a8743c5fc1 bash		 
+
 ------------------------------------------------------------------------------------------------------------------------
 
+docker run -P -d --name cart-container --link cassandra-container chkt/cart
 
 docker run -it --link cassandra:latest --rm cassandra cqlsh cassandra
 
