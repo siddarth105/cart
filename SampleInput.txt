@@ -25,7 +25,10 @@ Enter the SpringBoot folder in local machine and then run
 	docker run -P -d --name cart --link cassandra chkt/cart
 
 	To Log-In to the box
-	docker exec -it 65a8743c5fc1 bash		 
+	docker exec -it 65a8743c5fc1 bash
+
+	To scale up docker instance
+	docker-compose up --build --scale cart=5
 
 ------------------------------------------------------------------------------------------------------------------------
 
