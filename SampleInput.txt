@@ -34,3 +34,26 @@ docker run -P -d --name cart-container --link cassandra-container chkt/cart
 docker run -it --link cassandra:latest --rm cassandra cqlsh cassandra
 
 docker run -it --link cassandra-2:latest --rm cassandra cqlsh cassandra
+
+------------------------------------------------------------------------------------------------------------------------
+CONSUL :-
+------------------------------------------------------------------------------------------------------------------------
+
+PUT -> http://localhost:32769/v1/agent/service/register
+
+{
+  "id": "cart_2",
+  "name": "cart",
+  "address": "192.168.104.225",
+  "port": 8081,
+  "check": {
+    	"id": "api",
+    	"name": "cart_2",
+    	"http": "http://192.168.104.225:8081/actuator/health",
+	    "tis_skip_verify": false,
+	    "method": "GET",
+	    "interval": "10s",
+	    "timeout": "1s"
+	}
+}
+------------------------------------------------------------------------------------------------------------------------
