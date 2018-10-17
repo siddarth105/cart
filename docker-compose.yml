@@ -1,25 +1,31 @@
 version: '3'
 services:
   cart:
-    container_name: cart
+    image: chkt/cart
     build: .
+    deploy:
+        replicas: 5
     depends_on:
       - cassandra-container2
     ports:
       - 8080:8080
+      - 8081:8080
+      - 8082:8080
+      - 8083:8080
+      - 8084:8080
     networks:
       - cart_default
   cassandra-container2:
     container_name: cassandra-container2
     image: cassandra:latest
     volumes:
-      - '/My Computer/Java/DB/CASSANDRA:/var/lib/cassandra'
+      - '/Users/z00341l/DB/CASSANDRA:/var/lib/cassandra'
     ports:
-      - 9042:9042
-      - 9160:9160
-      - 7000:7000
-      - 7001:7001
-      - 7199:7199
+      - 32816:9042
+      - 32817:9160
+      - 32818:7000
+      - 32819:7001
+      - 32820:7199
     networks:
       - cart_default
 networks:
