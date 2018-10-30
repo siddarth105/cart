@@ -30,6 +30,9 @@ Enter the SpringBoot folder in local machine and then run
 	To scale up docker instance
 	docker-compose up --build --scale cart=5
 
+
+    https://www.ivankrizsan.se/2015/08/08/creating-a-docker-image-with-ubuntu-and-java/
+
 ------------------------------------------------------------------------------------------------------------------------
 
 docker run -P -d --name cart-container --link cassandra-container chkt/cart
