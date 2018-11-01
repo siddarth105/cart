@@ -1,5 +1,16 @@
 version: '3'
 services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./nginx/conf.d:/nginx/conf.d/
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - cart_default
   cart:
     image: chkt/cart
     build: .
