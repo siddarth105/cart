@@ -4,7 +4,7 @@ services:
     image: nginx:latest
     container_name: nginx
     volumes:
-      - ./nginx/conf.d:/nginx/conf.d/
+      - ./etc/nginx/conf.d:/etc/nginx/conf.d/
     restart: always
     ports:
       - 80:80
@@ -30,7 +30,7 @@ services:
     container_name: cassandra-container2
     image: cassandra:latest
     volumes:
-      - '/Users/z00341l/DB/CASSANDRA:/var/lib/cassandra'
+      - '/My Computer/Java/DB/CASSANDRA:/var/lib/cassandra'
     ports:
       - 32816:9042
       - 32817:9160

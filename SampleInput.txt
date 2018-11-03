@@ -20,6 +20,7 @@ Enter the SpringBoot folder in local machine and then run
 	docker build -f Dockerfile -t chkt/cart .
 
 	docker run -it --name cart --link cassandra-2 chkt/cart
+	docker run -it --name cart --link cassandra-container chkt/cart
 	
 	docker run -P -d --name cart chkt/cart
 	docker run -P -d --name cart --link cassandra chkt/cart
@@ -62,4 +63,19 @@ PUT -> http://localhost:32769/v1/agent/service/register
 	    "timeout": "1s"
 	}
 }
+
+
+CASSANDRA :-
+
+{
+  "id": "cassandra",
+  "name": "cassandra",
+  "address": "192.168.0.156",
+  "port": 32816
+}
+
+------------------------------------------------------------------------------------------------------------------------
+NGINX
+------------------------------------------------------------------------------------------------------------------------
+	https://dev.to/domysee/setting-up-a-reverse-proxy-with-nginx-and-docker-compose-29jg
 ------------------------------------------------------------------------------------------------------------------------
