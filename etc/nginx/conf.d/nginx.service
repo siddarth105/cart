@@ -1,0 +1,3 @@
+#!/bin/sh
+/usr/sbin/nginx -c /opt/consul-templates/nginx.conf -t && \
+exec /usr/sbin/nginx -c /opt/consul-templates/nginx.conf -g "daemon off;"

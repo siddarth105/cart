@@ -1,0 +1,2 @@
+#!/bin/bash
+service nginx start && exec /opt/consul_template/nginx.conf -consul=consul:8500 -template="nginx.conf:/opt/consul_template/nginx.conf:service nginx reload" && java -jar /cart-0.0.1-SNAPSHOT.jar

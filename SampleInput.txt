@@ -36,6 +36,8 @@ Enter the SpringBoot folder in local machine and then run
 
 ------------------------------------------------------------------------------------------------------------------------
 
+docker run -it --name cassandra-container cassandra -v  /My Computer/Java/DB/CASSANDRA:/var/lib/cassandra
+
 docker run -P -d --name cart-container --link cassandra-container chkt/cart
 
 docker run -it --link cassandra:latest --rm cassandra cqlsh cassandra

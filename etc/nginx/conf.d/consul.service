@@ -1,0 +1,4 @@
+#!/bin/sh
+exec consul-template \
+     -consul=consul:8500 \
+     -template "/opt/consul_template/nginx.conf:/etc/nginx/conf.d/nginx.conf nginx reload"

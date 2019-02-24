@@ -1,31 +1,21 @@
 version: '3'
 services:
-  nginx:
-    image: nginx:latest
-    container_name: nginx
-    volumes:
-      - ./etc/nginx/conf.d:/etc/nginx/conf.d/
-    restart: always
-    ports:
-      - 80:80
-      - 443:443
-    networks:
-      - cart_default
   cart:
     image: chkt/cart
     build: .
     deploy:
         replicas: 5
-    depends_on:
-      - cassandra-container2
     ports:
       - 8080:8080
       - 8081:8080
       - 8082:8080
       - 8083:8080
       - 8084:8080
+    depends_on:
+      - cassandra-container2  
     networks:
       - cart_default
+        
   cassandra-container2:
     container_name: cassandra-container2
     image: cassandra:latest
@@ -39,6 +29,24 @@ services:
       - 32820:7199
     networks:
       - cart_default
+      
+  consul: 
+    image: consul:latest
+    container_name: cart_consul 
+    ports: 
+      - "8500:8500" 
+    networks:
+      - cart_default 
+      
+  registrator:
+    command: "-internal consul://consul:8500"
+    image: gliderlabs/registrator:latest
+    container_name: registrator
+    volumes:
+      - "/var/run/docker.sock:/tmp/docker.sock"
+    networks:
+      - cart_default    
+      
 networks:
     cart_default:
-        driver: bridge
+        driver: bridge      
